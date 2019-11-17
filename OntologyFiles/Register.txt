@@ -1,0 +1,85 @@
+
+
+Avatar1: 
+
+Interests: 
+InterestA/0.5	
+InterestF/0.8
+InterestL/0.4
+InterestY/0.9
+
+Tasks: 
+Goal1 G
+	Task1 G 			  IN    A3
+		Task11  		  IM 	A2
+		Task13	Avatar3   IN    A2
+	Task2         Yes	  IF    /
+	Task3       Avatar2   IL    A1
+
+
+Services:
+Service2
+Service4
+Service7
+
+
+Avatar2: 
+
+Interests:
+InterestA/0.3
+InterestM/0.7
+InterestL/0.6
+InterestB/0.8
+InterestN/0.35
+
+
+Tasks:
+Goal2 G
+	Task12  Yes				IB  /
+		Task121	 Avatar3	IB  /
+		Task122 			IN 	/
+	Task4	     Avatar1    IL  A2
+	Task9	 				IF  A1
+	Task10	Yes    			IA  /
+
+Services:
+Service3
+Service19
+Service10
+Service12
+
+
+
+Avatar3: 
+
+Interests:
+InterestA/0.7
+InterestN/0.6
+InterestB/0.5
+
+Tasks:
+Goal2 G
+	Task13  Yes			IB  /
+	Task19	Avatar2 	IM  A2
+	Task5				IF  A1
+
+Services:
+Service13
+Service121
+Service14
+Service15
+
+
+
+Avatar4: 
+
+Interests:
+InterestF/0.9
+InterestY/0.7
+
+Services:
+Service5
+
+
+NB: G=Grouped
+	Y=Yes (It can do it)

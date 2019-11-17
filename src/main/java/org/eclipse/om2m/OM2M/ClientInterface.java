@@ -2,8 +2,6 @@ package org.eclipse.om2m.OM2M;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
-
 /**
  * Interface for the client part
  *

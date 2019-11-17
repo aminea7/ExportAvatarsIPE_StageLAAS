@@ -1,0 +1,488 @@
+package org.eclipse.om2m.Avata.jade;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.rdf.model.InfModel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.ReasonerRegistry;
+import org.apache.jena.reasoner.ValidityReport;
+import org.apache.jena.update.UpdateAction;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateRequest;
+import org.eclipse.om2m.Avatar.constants.SampleConstants;
+import org.eclipse.om2m.Avatar.resource.ContextManager;
+
+import jade.core.AID;
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.ParallelBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
+
+public class DeviceAvatar extends Agent{
+	private static Log logger = LogFactory.getLog(DeviceAvatar.class);
+	private static TDBConnection tdb;
+	private static String data;
+	ArrayList<String> containers = new ArrayList<String>();
+	public ContextManager cntx; 
+@Override
+protected void setup(){
+	logger.info("demarrage de l'agent recever");
+	data=null;
+	String rules=null;
+	Object[] args = getArguments();
+	logger.info(data);
+    if (args != null && args.length == 3) {
+        data = (String) args[0];
+        rules= (String) args[1];
+        containers= (ArrayList<String>)args[2];
+        cntx = new ContextManager(containers);
+    }
+	tdb = new TDBConnection("tdb",data);
+	ParallelBehaviour parallelBehaviour= new ParallelBehaviour();
+	addBehaviour(parallelBehaviour);
+	parallelBehaviour.addSubBehaviour(new CyclicBehaviour(){	
+		@Override
+		public void action() {	
+			
+			ACLMessage aCLMessage= receive();	
+			if (aCLMessage!=null && aCLMessage.getPerformative()==16){
+  	 
+				/*	logger.info("TestTiredness");
+				RuleTiredness();
+				String situation=Situation();
+				if (situation.equals("Danger") || situation.equals("Anomaly"))
+				{  
+					AID[] avatars= getAvatarsService("Dispay-Dashboard");
+					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+					//choisir l'avatar appropriÃ© parmi ceux retournÃ©s
+					message.addReceiver(avatars[0]);//new AID("DisplayAvatar", AID.ISLOCALNAME));
+					message.setContent(situation);
+					send(message);
+				}*/
+				
+			}
+			else block();
+		}	
+	});
+	/*ParallelBehaviour parallelBehaviour= new ParallelBehaviour();
+	addBehaviour(parallelBehaviour);
+	parallelBehaviour.addSubBehaviour(new OneShotBehaviour(){
+
+		@Override
+		public void action(){
+			System.out.println("showmessage");
+		}
+	}
+			);
+	
+	parallelBehaviour.addSubBehaviour(new TickerBehaviour(this,1000){
+		private int c;
+
+		@Override
+		protected void onTick() {
+			++c;
+			System.out.println("\n Ticker"+c);
+			System.out.println("\n");
+			// TODO Auto-generated method stub
+			
+		}
+		
+	});*/
+	//doDelete();
+	
+}
+public static String ExtractFirst(Model model)
+{ 
+	String queryString = 
+    		"PREFIX base: <http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#>" +
+    		"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+ 
+    		"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+ 
+    		"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"+ 
+    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+    	        "SELECT ?task "+
+    	        "WHERE { "+   
+    	         "base:App base:hasChildTask ?task ."+
+    	         "?task base:isFirst base:Oui ."+    
+    	        "}";
+	   
+    	    Query query = QueryFactory.create(queryString);
+    	    QueryExecution qe = QueryExecutionFactory.create(query, model);
+    	    ResultSet results =  qe.execSelect();
+    	  //  System.out.println(results.toString());
+    	   // ResultSetFormatter.out(System.out, results);
+    	  //  qe.close();
+    	   
+    	    String s = null;
+    	    while(results.hasNext()){ 
+    	    	QuerySolution binding = results.nextSolution(); 
+    	    	s=binding.get("task").toString();
+    	    	}
+	
+	return s;	
+}
+
+public static boolean isComposite(String task, Model model)
+{
+	String queryString = "PREFIX base: <http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#>\n" +
+    		"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+ 
+    		"PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"+ 
+    		"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"+ 
+    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+			" ASK {<"+task+"> <rdf:type> <base:CompositeTask> } ";
+	System.out.println("task                      "+task);
+	 System.out.println("------------------------");
+	System.out.println(queryString);
+    Query query = QueryFactory.create(queryString) ;
+    QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+    boolean b = qexec.execAsk();
+    qexec.close() ;   
+	return b;	
+}
+
+public void broadcast(String task) {
+	String[][] voisins= new String[10][10];
+	voisins[0][0]="A1";
+	voisins[0][1]="12";
+	voisins[1][0]="A2";
+	voisins[1][1]="9";
+	  for (int i = 0;i < voisins.length; i++) {
+		  ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(new AID(voisins[i][0], AID.ISLOCALNAME));
+			message.setContent(task);
+			send(message);	
+	      }	
+}
+
+public static boolean isAble(String avatar, String task, Model model)
+{
+	String queryString = "PREFIX base: <http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#>\n" +
+    		"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+ 
+    		"PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"+ 
+    		"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"+ 
+    		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+			" ASK {<"+avatar+"> <avatarOnt:realises> <"+task+"> } ";
+	System.out.println(queryString);
+    Query query = QueryFactory.create(queryString) ;
+    QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+    boolean b = qexec.execAsk();
+    qexec.close() ;   
+	return b;	
+}
+
+public void CollaborativeTask(ACLMessage aCLMessage)
+{	
+	if (aCLMessage!=null && aCLMessage.getPerformative()==16){
+		String app= SampleConstants.TaskOntology;
+		app=app+aCLMessage.getContent();
+		Model model = ModelFactory.createDefaultModel();
+        model.read(new ByteArrayInputStream(app.getBytes()), null);
+        System.out.println("\n \\n \\n \\n \\n \\n \\n \\n\\n \\n \\n");
+      String task=ExtractFirst(model);
+      boolean b=isComposite(task, model);
+      Model mod= ModelFactory.createDefaultModel();
+      mod.read(data);
+      String avatar= "DeviceAvatar";
+      boolean able=false;
+      if (b) {
+    	   able=isAble(avatar,task, mod);
+    	  if (able) { 
+      		//appeler la tache à réaliser si exec ou ajouter l'avatar a la liste si decouverte 
+      		//supprimer la  tache de l'application reconstruire l'application
+    	  }
+      }	
+      else {
+    	   able=isAble(avatar,task, mod);
+    	  if (able) {
+    		//appeler la tache à réaliser si exec ou ajouter l'avatar a la liste si decouverte 
+    		//supprimer la première tachede l'application et reconstruire l'application
+    	  }
+    	  else {
+    		  this.broadcast(task); 
+    	  }
+    	  
+      }
+  	
+	}
+	
+}
+
+@SuppressWarnings("deprecation")
+public static void RuleTiredness() {
+	//Model model = ModelFactory.createDefaultModel();
+	String queryClosingEyes = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+             "DELETE {?d AvatarOnt:hasTiredness  ?t.}"+
+             "INSERT {?d AvatarOnt:hasTiredness  'High'^^xsd:string;"+
+             	" rdf:type AvatarOnt:Driver . "+ 
+             		"   }"+
+             "WHERE  { ?d AvatarOnt:hasTiredness  ?t."+
+             " ?d AvatarOnt:hasAction 'ClosingEyes'^^xsd:string ."+    
+             	"} " ;
+	
+	
+	String queryInclinationEyes = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+             "DELETE {?d AvatarOnt:hasTiredness  ?t.}"+
+             "INSERT {?d AvatarOnt:hasTiredness  'Medium'^^xsd:string;"+
+             	" rdf:type AvatarOnt:Driver . "+ 
+             		"   }"+
+             "WHERE  { ?d AvatarOnt:hasTiredness  ?t."+
+             " ?d AvatarOnt:hasAction 'InclinationEyes'^^xsd:string ."+    
+             	"} " ;
+	
+	String queryInclinationHead = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+             "DELETE {?d AvatarOnt:hasTiredness  ?t.}"+
+              "INSERT {?d AvatarOnt:hasTiredness  'Medium'^^xsd:string;"+
+              	" rdf:type AvatarOnt:Driver . "+ 
+              		"   }"+
+              "WHERE  { ?d AvatarOnt:hasTiredness  ?t."+
+              " ?d AvatarOnt:hasAction 'InclinationHead'^^xsd:string ."+    
+              	"} " ;
+	
+	String queryYawning = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+			"DELETE {?d AvatarOnt:hasTiredness  ?t.}"+
+			"INSERT {?d AvatarOnt:hasTiredness  'Medium'^^xsd:string;"+
+			          " rdf:type AvatarOnt:Driver . "+ 
+			    "   }"+
+			"WHERE  { ?d AvatarOnt:hasTiredness  ?t."+
+				  " ?d AvatarOnt:hasAction 'Yawning'^^xsd:string ."+    
+			"} " ;
+	
+	String queryDanger = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+"DELETE {?v AvatarOnt:hasSituation ?s.}"+
+"INSERT {?v AvatarOnt:hasSituation 'Danger'^^xsd:string;"+
+          " rdf:type AvatarOnt:Vehicle . "+ 
+    "   }"+
+"WHERE  { ?v AvatarOnt:hasSituation ?s ."+
+       "  ?v AvatarOnt:hasDriver ?d ."+
+      "   ?d rdf:type AvatarOnt:Driver ."+
+	" ?d AvatarOnt:hasTiredness 'High'^^xsd:string ."+    
+"} " ;	
+	
+String queryOK = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+			"DELETE {?v AvatarOnt:hasSituation ?s.}"+
+			"INSERT {?v AvatarOnt:hasSituation 'OK'^^xsd:string;"+
+			          " rdf:type AvatarOnt:Vehicle . "+ 
+			    "   }"+
+			"WHERE  { ?v AvatarOnt:hasSituation ?s ."+
+			       "  ?v AvatarOnt:hasDriver ?d ."+
+			      "   ?d rdf:type AvatarOnt:Driver ."+
+				" ?d AvatarOnt:hasTiredness 'No'^^xsd:string ."+    
+			"} " ;
+
+String queryAnomaly = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+		"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+		"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+		"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+		"DELETE {?v AvatarOnt:hasSituation ?s.}"+
+		"INSERT {?v AvatarOnt:hasSituation 'Anomaly'^^xsd:string;"+
+		          " rdf:type AvatarOnt:Vehicle . "+ 
+		    "   }"+
+		"WHERE  { ?v AvatarOnt:hasSituation ?s ."+
+		       "  ?v AvatarOnt:hasDriver ?d ."+
+		      "   ?d rdf:type AvatarOnt:Driver ."+
+			" ?d AvatarOnt:hasTiredness 'Medium'^^xsd:string ."+    
+		"} " ;
+
+	tdb.dataset.begin(ReadWrite.WRITE);		
+/*	try {
+		model.read(new File(data).toURL().toString());	
+		tdb.model=model;	
+	} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
+	//tdb.close();
+	//tdb.getDataset().addNamedModel("Data", tdb.model);
+	/*Reasoner reasoner = new GenericRuleReasoner(Rule.rulesFromURL(rules));
+	InfModel infModel = ModelFactory.createInfModel(reasoner, model);
+	tdb.getDataset().removeNamedModel("Data");
+	tdb.getDataset().addNamedModel("Data", infModel);*/	
+	UpdateRequest request = UpdateFactory.create(queryClosingEyes);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+	request = UpdateFactory.create(queryInclinationEyes);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+	request = UpdateFactory.create(queryInclinationHead);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));	
+	request = UpdateFactory.create(queryYawning);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+    request = UpdateFactory.create(queryDanger);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+	request = UpdateFactory.create(queryOK);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+	request = UpdateFactory.create(queryAnomaly);
+	UpdateAction.execute(request, tdb.dataset.getNamedModel("DATA"));
+	//System.out.println(model);
+    //Model infModel = qe.
+	//System.out.println(infModel);
+	//System.out.println(tdb.getDataset().getNamedModel("Data"));
+	//tdb.getDataset().
+//	System.out.println("okkkk");
+	//Dataset ds= t.TDBloading("/home/iss/Musique/dataset.owl");
+	//System.out.println(tdb.getDataset().getNamedModel("Data"));	
+	//tdb.getAllStatements(tdb.model);
+	//tdb.close();
+	//System.out.println(tdb.model);	
+	tdb.dataset.commit();
+}
+
+public static String Situation(){
+	String selectTiredness="prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+			"prefix AvatarOnt: <http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#>"+
+			"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+			"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+
+			"SELECT ?v ?s "+
+			"WHERE  { ?v AvatarOnt:hasSituation ?s ."+
+			       " ?v rdf:type AvatarOnt:Vehicle."+  
+			"} " ;
+	tdb.dataset.begin(ReadWrite.READ) ;		
+	Query query = QueryFactory.create(selectTiredness);
+	  
+    QueryExecution qe = QueryExecutionFactory.create(query, tdb.dataset.getNamedModel("DATA"));
+    ResultSet results = qe.execSelect();
+    String s = null;
+    while(results.hasNext()){ 
+    	QuerySolution binding = results.nextSolution();  
+    	s=binding.get("s").toString();
+    	}
+    tdb.dataset.commit();
+	return s;
+	
+}
+
+
+public static Model verifier(){
+	
+	 Model monModele=null;
+	//try {
+	String data= "/home/iss/Musique/Avatar.owl";
+    String shape="/home/iss/Musique/MyRules.ttl";
+ 
+    try {
+         Reasoner reasoner = ReasonerRegistry.getRDFSReasoner();
+	    monModele = ModelFactory.createDefaultModel();  
+		monModele.read(new File(data).toURL().toString());
+		Model infModel = ModelFactory.createInfModel(reasoner, monModele);
+		ValidityReport validity = ((InfModel) infModel).validate();
+		 if (!validity.isValid()) {
+	          logger.trace("Conflicts");
+	         
+	          for (Iterator i = validity.getReports(); i.hasNext(); ) {
+	       logger.trace(" - " + i.next());
+	          }        
+	        }
+		 
+		 else {
+	        	
+	          Model shapeModel = ModelFactory.createDefaultModel();
+	          shapeModel.read(shape);
+	          System.out.println("shape");
+	          Model inferenceModel = ModelFactory.createDefaultModel(); 
+	         // inferenceModel = RuleUtil.executeRules(infModel,shapeModel,null, null);        
+	          System.out.println(inferenceModel);
+	        }		 
+		
+   } catch (Throwable t) {
+        logger.error(t.getMessage(), t);
+      }
+    /*  else {
+        	
+          Model shapeModel = JenaUtil.createDefaultModel();
+          shapeModel.read(shape);
+          System.out.println("shape");
+          inferenceModel = JenaUtil.createDefaultModel(); 
+          inferenceModel = RuleUtil.executeRules(infModel, shapeModel,null , null);        
+          System.out.println(inferenceModel);
+        }
+      } catch (Throwable t) {
+        //logger.error(WTF_MARKER, t.getMessage(), t);
+      }*/
+	return monModele; 
+ 
+    
+//	Model model = ModelFactory.createDefaultModel();
+
+}
+
+protected AID[] getAvatarsService( String service )
+{
+    DFAgentDescription dfd = new DFAgentDescription();
+    ServiceDescription sd = new ServiceDescription();
+    sd.setType( service );
+    dfd.addServices(sd);
+    try
+    {
+        DFAgentDescription[] result = DFService.search(this, dfd);
+        AID[] avatrs= new AID[result.length];
+        for (int i=0; i<result.length; i++)
+        {
+        	avatrs[i]=result[i].getName();
+        }
+        
+            return avatrs;
+    }
+    catch (FIPAException fe) { fe.printStackTrace(); }
+    return null;
+}
+protected void beforeMove()
+{
+	super.beforeMove();
+}
+protected void afterMove()
+{
+	super.afterMove();
+}
+
+protected void takeDown()
+{
+	super.takeDown();
+}
+
+
+}

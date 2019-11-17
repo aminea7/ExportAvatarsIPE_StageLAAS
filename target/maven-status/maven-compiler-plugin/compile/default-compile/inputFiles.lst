@@ -11,6 +11,7 @@
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/SocialNetworks/SocialNetwork.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatar/Avatar.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Ontology/Service.java
+/home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatar/HTTPServer.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Ontology/ServiceOperation.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/OM2M/Client.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatar/MetaAvatar.java
@@ -20,6 +21,7 @@
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatars/Repository.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatar/ServicesManager.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatar/ContainerJADE.java
+/home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/AvatarsLAAS/Controller/ControllerMessage.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatars/Activator.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Avatars/Main.java
 /home/a7qlf/Documents/CHARBON/StageAvatars/OM2M_2019/om2m/org.eclipse.om2m.AvatarsLAAS/src/main/java/org/eclipse/om2m/Ontology/Goal.java

@@ -1,0 +1,188 @@
+ <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#City -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#City">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Environment"/>
+        <hasWeather rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sunny</hasWeather>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Container_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Container_1">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Fog"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamOperatingRestriction -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamOperatingRestriction">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#OperatingRestriction"/>
+        <ssn:hasSurvivalProperty rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamSurvivalProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamSurvivalProperty -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamSurvivalProperty">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#SurvivalProperty"/>
+        <hasBatteryLife rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.4</hasBatteryLife>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamera -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamera">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#Sensor"/>
+        <ssn:hasMeasurementCapability rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraCapability"/>
+        <ssn:hasOperatingRestriction rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamOperatingRestriction"/>
+        <observes rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverVideo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraAvatar -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraAvatar">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Avatar"/>
+        <deployedIn rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Container_1"/>
+        <hasService rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraSevice"/>
+        <represents rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamera"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraCapability -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraCapability">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#MeasurementCapability"/>
+        <ssn:hasMeasurementProperty rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraProperty -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraProperty">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#MeasurementProperty"/>
+        <hasLatency rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.1</hasLatency>
+        <hasPrecision rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.7</hasPrecision>
+        <hasResolution rdf:datatype="http://www.w3.org/2001/XMLSchema#int">8</hasResolution>
+        <hasResponseTime rdf:datatype="http://www.w3.org/2001/XMLSchema#double">2.0</hasResponseTime>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraSevice -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCameraSevice">
+        <rdf:type rdf:resource="http://iserve.kmi.open.ac.uk/ns/msm#Service"/>
+        <msm1:hasOperation rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#analyseBehavior"/>
+        <msm1:hasOperation rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#getVideoURL"/>
+        <msm1:hasOperation rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOffCamDriver"/>
+        <msm1:hasOperation rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOnCamDriver"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverVideo -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverVideo">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#Observation"/>
+        <ssn:observedBy rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamera"/>
+        <san:hasObservationValue rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#VideoOut"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Driver_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Driver_1">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Driver"/>
+        <hasAction rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Normal</hasAction>
+        <hasTiredness rdf:datatype="http://www.w3.org/2001/XMLSchema#string">No</hasTiredness>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Situation -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Situation">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Situation"/>
+        <hasSituation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OK</hasSituation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Vehicle_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Vehicle_1">
+        <rdf:type rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Vehicle"/>
+        <hasDriver rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Driver_1"/>
+        <hasEnvironment rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#City"/>
+        <hasInterDevice rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#DriverCamera"/>
+        <inSituation rdf:resource="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#Situation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#VideoOut -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#VideoOut">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#SensorOutput"/>
+        <hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.youtube.com/watch?v=179dUKVMoxE</hasValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#analyseBehavior -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#analyseBehavior">
+        <rdf:type rdf:resource="http://iserve.kmi.open.ac.uk/ns/msm#Operation"/>
+        <hasAdress rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://192.168.0.2:8080/~/MN-BBB/ETH_GW/PHG_LUM_02?op=getBehaviour</hasAdress>
+        <hasMethod rdf:datatype="http://www.w3.org/2001/XMLSchema#string">getBehaviour</hasMethod>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#getVideoURL -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#getVideoURL">
+        <rdf:type rdf:resource="http://iserve.kmi.open.ac.uk/ns/msm#Operation"/>
+        <hasAdress rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://192.168.0.2:8080/~/MN-BBB/ETH_GW/PHG_TMP_00?op=get</hasAdress>
+        <hasMethod rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GET</hasMethod>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOffCamDriver -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOffCamDriver">
+        <rdf:type rdf:resource="http://iserve.kmi.open.ac.uk/ns/msm#Operation"/>
+        <hasAdress rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://192.168.0.2:8080/~/MN-BBB/ETH_GW/DriverCameraAvatar?on=false</hasAdress>
+        <hasMethod rdf:datatype="http://www.w3.org/2001/XMLSchema#string">POST</hasMethod>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOnCamDriver -->
+
+    <owl:NamedIndividual rdf:about="http://www.laas-cnrs.fr/recherches/SARA/ontologies/AvatarOnt#turnOnCamDriver">
+        <rdf:type rdf:resource="http://iserve.kmi.open.ac.uk/ns/msm#Operation"/>
+        <hasAdress rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://192.168.0.2:8080/~/MN-BBB/ETH_GW/DriverCameraAvatar?on=true</hasAdress>
+        <hasMethod rdf:datatype="http://www.w3.org/2001/XMLSchema#string">POST</hasMethod>
+    </owl:NamedIndividual>

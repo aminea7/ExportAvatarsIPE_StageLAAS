@@ -1,0 +1,90 @@
+"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#App -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#App\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#CompositeTask\"/>\n" + 
+						"        <hasGrouping rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Seq\"/>\n" + 
+						"        <hasChildTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T1\"/>\n" + 
+						"        <hasChildTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T4\"/>\n" + 
+						"        <hasChildTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#TC2\"/>\n" +
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Parallel -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Parallel\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Grouping\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Seq -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Seq\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Grouping\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T1 -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T1\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#AtomicTask\"/>\n" + 
+						"        <hasNextTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#TC2\"/>\n" + 
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Oui\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T2 -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T2\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#AtomicTask\"/>\n" + 
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T3 -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T3\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#AtomicTask\"/>\n" + 
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T4 -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T4\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#AtomicTask\"/>\n" + 
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#TC2 -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#TC2\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#CompositeTask\"/>\n" + 
+						"        <hasGrouping rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Parallel\"/>\n" + 
+						"        <hasChildTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T2\"/>\n" + 
+						"        <hasChildTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T3\"/>\n" + 
+						"        <hasNextTask rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#T4\"/>\n" + 
+						"        <isFirst rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"    \n" + 
+						"\n" + 
+						"\n" + 
+						"    <!-- http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#true -->\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Oui\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#First\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"\n" + 
+						"    <owl:NamedIndividual rdf:about=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#Non\">\n" + 
+						"        <rdf:type rdf:resource=\"http://www.semanticweb.org/kkhadir/ontologies/2019/1/DEMISA#First\"/>\n" + 
+						"    </owl:NamedIndividual>\n" + 
+						"</rdf:RDF>";
